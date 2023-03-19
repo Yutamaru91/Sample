@@ -1,5 +1,9 @@
 package plugin.sample;
 
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -13,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
@@ -39,6 +44,8 @@ public final class Main extends JavaPlugin implements Listener {
     List<Color> colorList = List.of(Color.RED, Color.BLUE, Color. WHITE, Color.BLACK);
     if(count % 2 == 0) {
       for (Color color : colorList) {
+
+        
 
 
       // 花火オブジェクトをプレイヤーのロケーション地点に対して出現させる。
@@ -76,4 +83,12 @@ public final class Main extends JavaPlugin implements Listener {
 
 
  }
+  @EventHandler
+  public void joinEvent(PlayerJoinEvent e) throws IOException {
+    Player player = e.getPlayer();
+    Path path = Path.of("work.text");
+    Files.writeString(path, "Hello World やるぞ！");
+    player.sendMessage(Files.readString(path));
+
+  }
 }
